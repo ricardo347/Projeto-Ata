@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package dslVersion="1.0.0.0" 
+        Id="ec98e533-db92-4e27-9e45-9ce2c04192f7" 
+        solutionId="ec98e533-db92-4e27-9e45-9ce2c04192f7" 
+        xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel" 
+        name="ProjetoAta"
+        sharePointProductVersion="16.0">
+  <features>
+        <featureReference itemId="e699ec9c-0355-4270-979c-a6f81f72428f" />
+  </features>
+</package>

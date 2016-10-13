@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="Scripts">
+    <File Path="Scripts\App.js" Url="Scripts/App.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\jquery-1.9.1.min.map" Url="Scripts/jquery-1.9.1.min.map" ReplaceContent="TRUE" />
+    <File Path="Scripts\jquery-1.9.1.min.js" Url="Scripts/jquery-1.9.1.min.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\jquery-1.9.1.js" Url="Scripts/jquery-1.9.1.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\jquery-1.9.1.intellisense.js" Url="Scripts/jquery-1.9.1.intellisense.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\popup.js" Url="Scripts/popup.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\SP.Core.js" Url="Scripts/SP.Core.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\init.js" Url="Scripts/init.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\SP.js" Url="Scripts/SP.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\SP.Runtime.js" Url="Scripts/SP.Runtime.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\SP.UI.Dialog.js" Url="Scripts/SP.UI.Dialog.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\clientforms.js" Url="Scripts/clientforms.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\clientpeoplepicker.js" Url="Scripts/clientpeoplepicker.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\autofill.js" Url="Scripts/autofill.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\PeoplePickerOwner.js" Url="Scripts/PeoplePickerOwner.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\clienttemplates.js" Url="Scripts/clienttemplates.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\PeoplePickerProblemaOwner.js" Url="Scripts/PeoplePickerProblemaOwner.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\PeoplePickerAtribuido.js" Url="Scripts/PeoplePickerAtribuido.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\PeoplePickerParticipantes.js" Url="Scripts/PeoplePickerParticipantes.js" ReplaceContent="TRUE" />
+  </Module>
+</Elements>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="Pages">
+    <File Path="Pages\Default.aspx" Url="Pages/Default.aspx" ReplaceContent="TRUE" />
+    <File Path="Pages\Ata_Part.aspx" Url="Pages/Ata_Part.aspx" ReplaceContent="TRUE" />
+    <File Path="Pages\addProblemaPopup.aspx" Url="Pages/addProblemaPopup.aspx" ReplaceContent="TRUE" />
+    <File Path="Pages\Page1.aspx" Url="Pages/Page1.aspx" ReplaceContent="TRUE" />
+  </Module>
+</Elements>
