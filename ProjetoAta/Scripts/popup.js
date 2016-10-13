@@ -26,7 +26,7 @@ $(function () {
 });
 //criar mecanismo para saber se esta sendo aberto pela primeira vez, ou está sendo editado.
 
-function loadContext() {
+function loadContext() { 
 
     if (on) {
         //  console.log('loadcontext ja foi executado');
@@ -38,7 +38,7 @@ function loadContext() {
         $.getScript(hostweburl + "/_layouts/15/" + "SP.RequestExecutor.js", execCrossDomainRequest);
     }
 }
-;
+
 function execCrossDomainRequest() {
 
     clientContext = new SP.ClientContext(appweburl);

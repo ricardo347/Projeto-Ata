@@ -3,7 +3,7 @@
 $(document).ready(function () {
 
     // Specify the unique ID of the DOM element where the
-    // picker will render.
+    // picker will render.dsf
 
     //initializePeoplePicker('peoplePickerParticipantes');
     
