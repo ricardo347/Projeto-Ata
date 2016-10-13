@@ -4,3 +4,19 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+#table_conteiner_itensAta{
+     width:650px;
+}
+#th_descricao{
+    width:400px;
+}
+#th_problema{
+    width:150px;
+}
+#th_status{
+    width:50px;
+}
+.imgBtnAdd{
+    height:20px;
+}

@@ -98,7 +98,7 @@
     </table>
     <br />
     <br />
-    <table border="1" width="640">
+    <table border="1" id="table_conteiner_itensAta">
         <br />
         <tr>
             <td>Lista de tópicos da reunião</td>
@@ -109,12 +109,12 @@
                     <table id="conteiner_problemas_table">
                         <tr id="conteiner_problemas_header">
                             <th>
-                                <input id='chk_itemAta_all' type="checkbox" />
+                                <input id='chk_itemAta_all' class="chk_itemAta" type="checkbox" />
 
                             </th>
-                            <th width="400">Descrição</th>
-                            <th width="120" colspan="2">Problema</th>
-                            <th width="50">Status</th>
+                            <th id="th_descricao">Descrição</th>
+                            <th id="th_problema" colspan="2">Problema</th>
+                            <th id="th_status">Status</th>
                         </tr>
                     </table>
                 </div>
@@ -125,7 +125,7 @@
     <table width="640">
         <tr>
             <td><input id='btn_insereItem' type="button" value="Inserir Item" onclick="insereItem()" /></td>
-            <td><input id='btn_excluiItem' type="button" value="Excluir Item" onclick="exlcuiItem()" /></td>
+            <td><input id='btn_excluiItem' type="button" value="Excluir Item" onclick="excluiItem()" /></td>
                         
         </tr>
         <tr><br />

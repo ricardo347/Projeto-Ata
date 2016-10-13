@@ -11,7 +11,7 @@ var rootweb;
 var clientContext;
 var items;
 var on;
-//var cont_itemAta = 0; //contador de linhas de item de ata
+var cont_itemAta = 0; //contador de linhas de item de ata
 var cont_itemProb = []; //contador de problemas em cada item de ata
 var proprietario;
 var participantes;
@@ -22,6 +22,12 @@ $(document).ready(function () {
     initializePeoplePickerParticipantes('peoplePickerParticipantes');
     $("#dt_ata").datepicker({ dateFormat: 'mm/dd/yy' });
 
+    $(document).on('click',":checkbox.chk_itemAta", function () {
+        var itemAta = $(this).attr('itemAta');
+               
+    });
+    
+    
 });
 
     function loadContext() {
@@ -187,29 +193,32 @@ function insereItem() {
     //criar div e inputs hidden para a passagem de dados vinda da pagina filha.
     // console.log("Inserindo item");
     
-    var cont_itemAta = $('#hidden_variaveis').children('div').length +1;
-    
+    //var cont_itemAta = $('#hidden_variaveis').children('div').length +1;
+    cont_itemAta++;
     var itemata = document.createElement('div');
     itemata.className = "itemAta";
-    itemata.id = "itemAta." + cont_itemAta;
+    itemata.id = "itemAta" + cont_itemAta;
+    itemata.setAttribute('itemAta', cont_itemAta);
     $("#hidden_variaveis").append(itemata);
     
-    var html = '<tr id="item_ata'+cont_itemAta+'">' +
+    var html = '<tr class="item_ata'+cont_itemAta+'">' +
         '<td rowspan="2" id="seletorLinha'+cont_itemAta+'"></td>' +
         '<td rowspan="2" id="descr'+cont_itemAta+'"></td>' +
-        '<td colspan="2" id="imgBtnAdd' + cont_itemAta + '"></td>' +
+        '<td colspan="2" id="imgBtnAdd' + cont_itemAta + '" class="imgBtnAdd"></td>' +
         '<td rowspan="2" id="status'+cont_itemAta+'"></td>' +
         '</tr>' +
-        '<tr>' +
+        '<tr class="item_ata'+cont_itemAta+'">' +
             '<td width="150" id="problemas'+cont_itemAta+'"></td>' +
-            '<td width="150" id="imgBtnDel' + cont_itemAta + '"></td>' +
+            '<td width="150" id="imgBtnDel' + cont_itemAta + '" class="imgBtnDel"></td>' +
         '</tr>';
 
     $('#conteiner_problemas_table').append(html);
     
     var chkitemAta = document.createElement('input');
     chkitemAta.type = 'checkbox';
-    chkitemAta.id = '';
+    chkitemAta.id = 'chk_itemAta+' + cont_itemAta;
+    chkitemAta.className = 'chk_itemAta';
+    chkitemAta.setAttribute ('itemAta',cont_itemAta);
     $('#seletorLinha' + cont_itemAta).append(chkitemAta);
     
     var txtDescItemAta = document.createElement('textarea');
@@ -238,6 +247,7 @@ function insereItem() {
     var div_conteiner_pai = document.createElement('div');
     div_conteiner_pai.id = cont_itemAta
     div_conteiner_pai.className = 'item_ata';
+    div_conteiner_pai.setAttribute('itemAta', cont_itemAta);
     
     
     $('#hidden_conteiners').append(div_conteiner_pai);
@@ -249,7 +259,22 @@ function excluiItem() {
     //remove ele , remove a sua referencia na div Hidden_variaveis
     //remove da div hidden_conteiners o item e seus problemas.
     //se o formulario foi aberto no modo edição exluir os problmeas também.
+    var selecionados = [];
+    $(":checkbox.chk_itemAta").each(function (index) {        
+        if ($(this).is(":checked"))
+            selecionados[index] = $(this).attr('itemAta');                
+    });
 
+    for (var i = 0; i < selecionados.length; i++) {
+        $("#hidden_variaveis").children("[itemAta="+selecionados[i]+"]").remove();
+        $("#hidden_conteiners").children("[itemAta=" + selecionados[i] + "]").remove();
+        $("tr.item_ata" + selecionados[i]).remove();
+    }
+    //reindexando e reorganizando os elementos após 
+    $('#table_conteiner_itensAta').children('tr').each(function (index) {
+        $(this).attr('class') = 'item_ata' + index;
+        //$(this)
+    });
 
 
 }
@@ -303,9 +328,10 @@ function openPopupNewProblema(id_itemAta) {
         //como neste momento, apenas uma janela de inserção de problema pode ser aberta, este valor não sera alterado por outro.
         var itemprob = document.createElement('input');
         itemprob.type = 'hidden';
-        itemprob.value = $("div.item_ata#" + id_itemAta).children('div').length + 1;
+        itemprob.className = 'itemProb';
+        //itemprob.value = $("div.itemata#itemAta" + id_itemAta).children('div').length + 1;
 
-        $("itemprobAtual#" + id_itemAta).append(itemprob);
+        $("div.itemAta#itemAta" + id_itemAta).append(itemprob);
 
 
     //$('#cont_itemProb').val(cont_itemProb[(id_itemAta - 1)]);

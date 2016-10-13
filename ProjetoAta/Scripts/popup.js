@@ -9,13 +9,16 @@ var id_itemAta;
 var on;
 
 $(function () {
+    opener = window.opener;
     //SP.SOD.loadMultiple(['init.js', 'sp.js'], loadContext());
     initializePeoplePickerProblemaOwner('peoplePickerProblemaOwner');
     initializePeoplePickerAtribuido('peoplePickerAtribuido');
     
     //id se refere ao numerador de items de problema e item de ata e não ao id gravado na lista de problemas.
     index_problema = opener.$('#cont_itemProb').children('div').length+1;
-    
+    id_itemAta = $("#id_itemAta").val();
+
+
     console.log("Este é o problema numero: "+index_problema);
     console.log("Que pertence ao item de ata : "+id_itemAta);
     //$("#discussao_problema").val(opener.$("#txt_descricao\\." + id_itemAta).val());
@@ -24,6 +27,16 @@ $(function () {
    
     $("#dt_venc_problema").datepicker({ dateFormat: 'mm/dd/yy' });
 });
+
+$(window).load(function (){
+    console.log("Dentro do window.load: ");
+    id_itemAta = $("#id_itemAta").val();
+    console.log("id_itemAta, dentro do window.load " + id_itemAta);
+   
+
+});
+
+
 //criar mecanismo para saber se esta sendo aberto pela primeira vez, ou está sendo editado.
 
 function loadContext() { 
@@ -212,7 +225,13 @@ function validacoes() {
     return valida;
 }
 
-function cancelar() {
+function cancelar() { //ímplementar o mesmo metodo para o botão fechar do navegador
+
+    console.log(opener);
+    console.log('div.itemAta#itemAta' + id_itemAta);
+    opener.$('div.itemAta#itemAta'+id_itemAta).children('input').last().remove();
+
     window.close();
 }
 
+//testar se a mudança do contador de item ata no app.js, devido ao mecanismo de exclusão, reflete problemas na gravação da ata.
