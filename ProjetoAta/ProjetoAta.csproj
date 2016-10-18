@@ -58,7 +58,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Images\add_icon.png" />
-    <Content Include="Images\del_icon.png" />
+    <Content Include="Images\menos_icon.png" />
     <Content Include="Lista de Ata\Elements.xml" />
     <Content Include="Pages\Ata_Part.aspx" />
     <Content Include="Pages\Elements.xml">

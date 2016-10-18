@@ -138,6 +138,7 @@
         </tr>
 
     </table>
+    <input type="hidden" id="contador_problemas" value="0"></input>
     <div id="hidden_variaveis">
         
         

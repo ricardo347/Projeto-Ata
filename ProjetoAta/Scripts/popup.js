@@ -15,7 +15,7 @@ $(function () {
     initializePeoplePickerAtribuido('peoplePickerAtribuido');
     
     //id se refere ao numerador de items de problema e item de ata e não ao id gravado na lista de problemas.
-    index_problema = opener.$('#cont_itemProb').children('div').length+1;
+    
     id_itemAta = $("#id_itemAta").val();
 
 
@@ -31,6 +31,7 @@ $(function () {
 $(window).load(function (){
     console.log("Dentro do window.load: ");
     id_itemAta = $("#id_itemAta").val();
+    index_problema = parseInt(opener.$('#contador_problemas').val()) + 1;
     console.log("id_itemAta, dentro do window.load " + id_itemAta);
    
 
@@ -112,25 +113,6 @@ function criaHidden(valor, tipo) {
     return prob_hidden_data;
 }
 
-function adicionaDiv() {
-
-    if (opener.$('div.hidden_conteiner#' + id_itemAta).length)
-        console.log("VALIDAÇÃO POSITIVA DENTRO DO CRIADADOS");
-    else
-        console.log("VALIDAÇÃO NEGATIVA DENTRO DO CRIADADOS");
-
-    var div = document.createElement('div');
-    div.id = 'teste';
-    div.className = 'classe';
-
-    var input = document.createElement('input');
-    input.type = 'text';
-    input.value = 'dentro do div;';
-
-    div.appendChild(input);
-    criaDadosProblema2();
-}
-
 function getInfoFromPeoplePickers(callback) {
 
     var problemaOwnerKey = getUserInfoProblemaOwner();
@@ -150,10 +132,20 @@ function salvarPeoplePickers() {
                 var div_conteiner = criaDivDadosProblema(problemaOwner, atribuidos);
                 opener.$('div.item_ata#' + id_itemAta).append(div_conteiner);
 
-                opener.$('#status'+id_itemAta).append("Pendente<br>")
-                opener.$('#problemas' + id_itemAta).append("<a href='Page1.aspx'>Problema " + index_problema + "</a><br>");
-                opener.$('#imgBtnDel' + id_itemAta).append('<img src="../Images/del_icon.png" class="btnProblemas" width="15" height="15">');
-                window.close();
+                var imgBtnDelProblema = document.createElement('img');
+                //imgBtnDelProblema.src = "../Images/del_icon.png";
+                imgBtnDelProblema.className = "btnDelProblema";
+                imgBtnDelProblema.width = '15';
+                imgBtnDelProblema.height = '15';
+                imgBtnDelProblema.setAttribute('itemAta', id_itemAta);
+                imgBtnDelProblema.setAttribute('itemProblema', index_problema);
+
+                console.log("safasdfasd ");
+                //opener.$('#status' + id_itemAta).append("Pendente<br>");
+                opener.$('#problemas' + id_itemAta).append('<a href="Page1.aspx"  id="linkItemProblema'+index_problema+'" class="linkProblema" itemAta=' + id_itemAta + ' itemProblema=' + index_problema + ' >Problema ' + index_problema + '</a> ');
+                opener.$('#problemas' + id_itemAta).append('<img src="../Images/menos_icon.png" itemAta=' + id_itemAta + ' itemProblema=' + index_problema + ' class="btnDelProblema" width="15" height="15"></img><br id="linkItemProblema' + index_problema + '" class="linkProblema">');
+                opener.$('#contador_problemas').val(parseInt(opener.$('#contador_problemas').val()) + 1);
+               window.close();
             }            
         });
     } else {

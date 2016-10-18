@@ -12,7 +12,7 @@ var clientContext;
 var items;
 var on;
 var cont_itemAta = 0; //contador de linhas de item de ata
-var cont_itemProb = []; //contador de problemas em cada item de ata
+var f = []; //contador de problemas em cada item de ata
 var proprietario;
 var participantes;
 
@@ -24,13 +24,25 @@ $(document).ready(function () {
 
     $(document).on('click',":checkbox.chk_itemAta", function () {
         var itemAta = $(this).attr('itemAta');
-               
     });
-    
-    
+
+    $(document).on('click', 'img.btnDelProblema', function () {
+        console.log("Botao: Item Ata " + $(this).attr('itemAta') + " problema: " + $(this).attr('itemProblema'));
+        var itemAta = $(this).attr('itemAta');
+        var itemProblema = $(this).attr('itemProblema');
+        
+        //removendo de hidden_variaveis
+        $('#itemAta' + itemAta).children('input').last().remove();
+        //removendo de hidden_conteiners
+        $('#item' + itemAta + 'problema' + itemProblema).remove();
+
+        $(".linkproblema#linkItemProblema" + itemProblema).remove();
+        
+        $(this).remove();
+    });
 });
 
-    function loadContext() {
+function loadContext() {
 
         if (on) {
             //  console.log('loadcontext ja foi executado');
@@ -138,63 +150,17 @@ function newItemAta() {
 
 function updateItemAta() { }
 
-function newProblema(title,discussion) {
-    loadContext();
-    console.log("valor do contexto: " + clientContext);
-       var itemProblema = web
-                .get_lists()
-                .getByTitle('Problemas');
- 
-        // create a new item on the list
-        var problema = itemProblema.addItem(new SP.ListItemCreationInformation());
-        // You may even leave out the ListItemCreationInformation, 
-        // if you don't set any of its properties:
-        // var contact = list.addItem();
-     
-        problema.set_item("Title", "Problema 1"); // 'Title' is the internal name for 'Last Name'
-        problema.set_item("Discussion", "Teste de demanda de problema");
-        problema.set_item("Owner", proprietario);
-        //problema.set_item("AssignedTo", atribuido);
-        
-        // ensure that contact is saved during the query
-        problema.update();
- 
-        clientContext.executeQueryAsync(function () {
-            console.log("Id of new contact: ", problema.get_id());
-        }, function () {
-            console.log("erro no inserir problema");
-            alert('Error: ' + args.get_message());
-        });
-
-        window.close();    
-}
-
 function updateProblema() { }
 
 function deletaProblema() { }
-
-function deletaAta() {
-
-    
-}
-
-function distribuir() {
-    var window_prob = window.open('Page2.aspx', 'Pagina', 'STATUS=NO, TOOLBAR=NO, LOCATION=NO, DIRECTORIES=NO, RESISABLE=NO, SCROLLBARS=YES, TOP=10, LEFT=10, WIDTH=770, HEIGHT=400');
-    console.log(window_prob.$('#txt_tituloProblema').val('valor trocado'));
-    
-    if (window_prob) {
-        window_prob.opener.$('#txt_descricao.1').val("valor de teste");
-    }
-
-    return false;
-}
 
 function insereItem() {
     //criar div e inputs hidden para a passagem de dados vinda da pagina filha.
     // console.log("Inserindo item");
     
     //var cont_itemAta = $('#hidden_variaveis').children('div').length +1;
-    cont_itemAta++;
+    cont_itemAta++;    
+
     var itemata = document.createElement('div');
     itemata.className = "itemAta";
     itemata.id = "itemAta" + cont_itemAta;
@@ -208,8 +174,8 @@ function insereItem() {
         '<td rowspan="2" id="status'+cont_itemAta+'"></td>' +
         '</tr>' +
         '<tr class="item_ata'+cont_itemAta+'">' +
-            '<td width="150" id="problemas'+cont_itemAta+'"></td>' +
-            '<td width="150" id="imgBtnDel' + cont_itemAta + '" class="imgBtnDel"></td>' +
+            '<td id="problemas'+cont_itemAta+'"></td>' +
+            '<td id="imgBtnDel' + cont_itemAta + '" class="imgBtnDel"></td>' +
         '</tr>';
 
     $('#conteiner_problemas_table').append(html);
@@ -235,14 +201,6 @@ function insereItem() {
     imgBtnAddProblema.setAttribute("onclick","openPopupNewProblema(" + cont_itemAta + ")");
     $('#imgBtnAdd' + cont_itemAta).append(imgBtnAddProblema);
         
-    var imgBtnDelProblema = document.createElement('img');
-    imgBtnDelProblema.src = "../Images/del_icon.png";
-    imgBtnDelProblema.className = "btnProblemas";
-    imgBtnDelProblema.width = '15';
-    imgBtnDelProblema.height = '15';
-    imgBtnDelProblema.onclick = "deletaProblema(" + cont_itemAta + ")";
-   // $('#imgBtnDel' + cont_itemAta).append(imgBtnDelProblema);
-
     // criação da div de item de ata
     var div_conteiner_pai = document.createElement('div');
     div_conteiner_pai.id = cont_itemAta
@@ -275,47 +233,7 @@ function excluiItem() {
         $(this).attr('class') = 'item_ata' + index;
         //$(this)
     });
-
-
 }
-
-function salvar() {
-    //adicionado linha de problema no item de ata, depois de validar todos os campos antes de salvar
-    var html = '<span onclick="openPopupProb('+id+')">Problema '+id+'</span><br>';
-    $('#problema\\.' + id).append(html);
-    console.log('valor do assunto: '+window.opener.$('#txt_assunto').val);
-}
-
-function teste() {
-    ExecuteOrDelayUntilScriptLoaded(loadContext, "sp.js");
-    function loadContext() {
-
-        console.log("dentro de console log")
-        var context = SP.ClientContext.get_current();
-        web = context.get_web();
-        listCollection = web.get_lists();
-
-        context.load(listCollection);
-        context.executeQueryAsync(onQuerySucceeded, onQueryFailed);
-
-        function onQuerySucceeded() {
-            //console.log('valor de url:'+web.get_url());
-            console.log("query succeded");
-            var listInfo = 'Lists on the current site: ' + '\n\n';
-            var listEnumerator = listCollection.getEnumerator();
-            while (listEnumerator.moveNext()) {
-                var list = listEnumerator.get_current();
-                listInfo += list.get_title() + '\n';
-            }
-            console.log(listInfo);
-        }
-
-        function onQueryFailed(sender, args) {
-            alert("Request Failed. " + args.get_message());
-        }
-    }
-}
-//trocar o elemento criado na variavel html para <p>
 
 function openPopupNewProblema(id_itemAta) {
    // console.log("openPopupNewProblema - id_itemAta: " + (id_itemAta - 1));
@@ -323,7 +241,7 @@ function openPopupNewProblema(id_itemAta) {
     var janelaliberada = true;
     if (janelaliberada) {
 
-        cont_itemProb[(id_itemAta - 1)]++; //gerenciar incremento deste contador, pois só deve incrementar quando salvar
+        //cont_itemProb[(id_itemAta - 1)]++; //gerenciar incremento deste contador, pois só deve incrementar quando salvar
 
         //como neste momento, apenas uma janela de inserção de problema pode ser aberta, este valor não sera alterado por outro.
         var itemprob = document.createElement('input');
@@ -355,19 +273,10 @@ function openPopupNewProblema(id_itemAta) {
     }
 
 }
-
 //criar mecanismo para saber se esta sendo aberto pela primeira vez, ou está sendo editado.
 function openPopupProb(id) {
     var url = '.https://jesuitasbrcnet.sharepoint.com/sites/pwa_at/Projeto_Ata/Lists/Issues/DispForm.aspx?ID=1&Source=https%3A%2F%2Fjesuitasbrcnet%2Esharepoint%2Ecom%2Fsites%2Fpwa_at%2FProjeto_Ata%2FLists%2FIssues%2FAllItems%2Easpx&ContentTypeId=0x0100E9C60707D063BC4EAD8EB6FD5DDC8B19'
     window.open(url,id,'STATUS=NO, TOOLBAR=NO, LOCATION=NO, DIRECTORIES=NO, RESISABLE=NO, SCROLLBARS=YES, TOP=10, LEFT=10, WIDTH=770, HEIGHT=500');
-}
-
-function addInput(val) {
-    var input = document.createElement('input');
-    input.setAttribute('type', 'hidden');
-    input.setAttribute('value', val);       
-    document.body.appendChild(input);
-    
 }
 
 function getInfoFromPeoplePickers(callback) {
@@ -476,78 +385,6 @@ function salvarPeoplePickers() {
     }
 }
 
-function testeCall(owner, participantes) {
-    console.log($('#txt_assunto').val());
-    console.log(owner);
-    console.log(participantes);
-    console.log($('#dt_ata').val() + " 00:00");
-    //pega os campos e abastece num array;
-    var dadosItemsAta = organizaItemsAta();
-    
-    var listAtaDeReuniao = web
-               .get_lists()
-               .getByTitle('Ata de Reunião');
-
-    var ata = listAtaDeReuniao.addItem(new SP.ListItemCreationInformation());
-    ata.set_item("Title", $('#txt_assunto').val()); // 'Title' is the internal name for 'Last Name'
-    ata.set_item("Data", $('#dt_ata').val()+" 00:00"); //configurar a hora correta da gravação
-    ata.set_item("Proprietario", owner);
-    ata.set_item("Participantes",participantes);
-    ata.update();
-
-    clientContext.executeQueryAsync(function (){ //Ata de reunião Salva
-        /*var idAta = ata.get_id();
-        var itemAta = new Array(dadosItemsAta.length);
-        var listItemAta = web
-            .get_lists()
-            .getByTitle('Items de Ata');
-        
-        for (var i = 0; i < dadosItemsAta.length; i++) {
-            itemAta[i] = listItemAta.addItem(new SP.ListItemCreationInformation());
-            itemAta[i].set_item('Title', $('#txt_descricao\\.' + i + 1).val());
-            itemAta[i].set_item('id_ata', idAta);
-            itemAta[i].update();
-        }        
-        clientContext.executeQueryAsync(function (){// Items da Ata Salvos
-            var listProblemas = web
-                .get_lists()
-                .getByTitle('Problemas');
-
-            var itemProblema = new Array(dadosItemsAta.length);
-            for (var j = 0; j < dadosItemsAta.length; j++) {//item de ata
-                itemProblema[j] = new Array(dadosItemsAta[j].length);
-                for (var k = 0; k < dadosItemsAta[j].length; k++) {//item de problema
-                     
-                itemProblema[j][k] = listProblemas.addItem(new SP.ListItemCreationInformation());
-                itemProblema[j][k].set_item('Title', dadosItemsAta[j][k][0]);
-                itemProblema[j][k].set_item('Owner', dadosItemsAta[j][k][1]);
-                itemProblema[j][k].set_item('AssignedTo', dadosItemsAta[j][k][2]);
-                itemProblema[j][k].set_item('Status', dadosItemsAta[j][k][3]);
-                itemProblema[j][k].set_item('Category', dadosItemsAta[j][k][4]);
-                itemProblema[j][k].set_item('Prioridade', dadosItemsAta[j][k][5]);
-                itemProblema[j][k].set_item('DueDate', dadosItemsAta[j][k][6]);
-                itemProblema[j][k].set_item('Discussion', dadosItemsAta[j][k][7]);
-                itemProblema[j][k].set_item('Resolution', dadosItemsAta[j][k][8]);
-                itemProblema[j][k].set_item('id_item_ata', itemAta[j]);
-                itemProblema[j][k].update();
-                    
-                }
-            }
-            clientContext.executeQueryAsync(function () {
-                console.log("Gravação terminada com sucesso !!!");
-            }, function (sender, args) {
-                alert('Erro no Insert de Problemas: ' + args.get_message());
-            });
-        },function (sender, args) {
-            alert('Erro no Insert de Item de Ata: ' + args.get_message());
-        });
-    */}, function (sender, args) {
-        alert('Erro no Insert de Ata de reunião: ' + args.get_message());
-    });
-}
-
-//estudar uma forma de colocar o item de ata, diretamente na div do item de problema, 
-
 function organizaItemsAta(){
     console.log("Dentro do organiza: ");
     var indexHc = $("div.item_ata").length;
@@ -608,6 +445,7 @@ function validacoes() {
     
     return valida;
 }
+
 function msieversion() {
 
     var ua = window.navigator.userAgent;
@@ -727,3 +565,6 @@ function salvarv2() {
         //alert("Existem campos que devem ser preenchidos e estão vazios.");
     }
 }
+
+
+//apagar o <br> junto a exclusão de um problema.
